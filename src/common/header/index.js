@@ -33,7 +33,8 @@ const Header = (props) => {
 
 const mapStateToProps = (state) => {
 	return {
-		inputValue: state.header.inputValue // 这里使用的是header下的reducer中的inputValue，也就是子reducer，所以写为state.header.inputValue
+		// 这里因为使用了immutable，所以state.header是一个immutable对象，我们在获取值的时候就需要使用get方法。
+		inputValue: state.header.get('inputValue') 
 	}
 }
 
