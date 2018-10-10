@@ -7,9 +7,41 @@ import {
 	NavItem,
 	NavSearch,
 	Addition,
-	Button
+	Button,
+	Searchinfo,
+	SearchInfoTitle,
+	SearchInfoSwitch,
+	SearchInfoItem,
+	SearchInfoList
 }from './style'
 import { actionCreator } from './store'
+
+// 定义一个函数，函数的返回值为热门搜索部分的内容
+// 获取搜索框内获取到焦点，那么就返回该热门搜索部分
+// 否则就返回空，即不现实热门搜索部分
+const getListArea = (show) => {
+	if (show){
+		return (
+			<Searchinfo>
+				<SearchInfoTitle>
+					热门搜索
+					<SearchInfoSwitch>
+						换一换
+					</SearchInfoSwitch>
+				</SearchInfoTitle>
+				<SearchInfoList>
+					<SearchInfoItem> 教育 </SearchInfoItem>
+					<SearchInfoItem> 区块链 </SearchInfoItem>
+					<SearchInfoItem> 小程序 </SearchInfoItem>
+					<SearchInfoItem> Vue </SearchInfoItem>
+					<SearchInfoItem> 理财 </SearchInfoItem>
+				</SearchInfoList>
+			</Searchinfo>
+		)
+	}else{
+		return null;
+	}
+}
 
 const Header = (props) => {
 	return (
@@ -19,8 +51,10 @@ const Header = (props) => {
 				<NavItem className='left active'> 首页 </NavItem>
 				<NavItem className='left'> 下载App </NavItem>
 				<NavItem className='right'> 登录 </NavItem>
-				<NavItem className='right' onClick={ props.clickSearchFocus }> Aa { props.inputValue } </NavItem>
-				<NavSearch></NavSearch>
+				<NavItem className='right'> Aa </NavItem>
+				<NavSearch onFocus={ props.SearchFocus } onBlur={ props.SearchBlur }>	
+				</NavSearch>
+					{ getListArea(props.showSearchArea) }
 				<Addition>
 					<Button className='writting'> 写文章 </Button>
 					<Button className='reg'> 注册 </Button>
@@ -33,20 +67,19 @@ const Header = (props) => {
 
 const mapStateToProps = (state) => {
 	return {
-		// inputValue: state.header.get('inputValue') 这是没有使用redux-immutable
-		// 只使用immutable的写法
-
-		// 下面是我们使用redux-immutable后的写法，此时因为将/src/stare下的reducer中的state也变成了immutable对象
-		// 所以直接使用get就行
-		inputValue: state.get('header').get('inputValue')
-		// 上面的写法和 inputValue: state.getIn(['header', 'inputValue']) 效果一样
+		showSearchArea: state.get('header').get('showSearchArea')
 	}
 }
 
 const mapDispathToProps = (dispatch) => {
 	return {
-		clickSearchFocus(){
+		// 获得焦点，派发dispatch函数
+		SearchFocus(){
 			dispatch(actionCreator.searchFocus())
+		},
+		// 失去焦点，派发dispatch函数
+		SearchBlur(){
+			dispatch(actionCreator.searchBlur())
 		}
 	}
 }
