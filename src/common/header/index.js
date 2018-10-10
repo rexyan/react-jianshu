@@ -33,8 +33,13 @@ const Header = (props) => {
 
 const mapStateToProps = (state) => {
 	return {
-		// 这里因为使用了immutable，所以state.header是一个immutable对象，我们在获取值的时候就需要使用get方法。
-		inputValue: state.header.get('inputValue') 
+		// inputValue: state.header.get('inputValue') 这是没有使用redux-immutable
+		// 只使用immutable的写法
+
+		// 下面是我们使用redux-immutable后的写法，此时因为将/src/stare下的reducer中的state也变成了immutable对象
+		// 所以直接使用get就行
+		inputValue: state.get('header').get('inputValue')
+		// 上面的写法和 inputValue: state.getIn(['header', 'inputValue']) 效果一样
 	}
 }
 

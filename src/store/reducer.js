@@ -1,9 +1,9 @@
-import { combineReducers } from 'redux'
-// 因为header/store/index.js下导入了reducer，所以我们只需导入/common/header/store即可
-// reducer as herderReaducer 的意思是，导入reducer，从命名为herderReaducer
+// import { combineReducers } from 'redux'
+// 之前的combineReducers 是从redux中导入的，现在我们从redux-immutable导入combineReducers
+// 这个combineReducers可以创建不可变的immutable对象
+import { combineReducers } from 'redux-immutable'
 import { reducer as herderReaducer } from '../common/header/store';
 
-// 在此处将header中的reducer信息导入，并起一个名字叫做header
 const reducer = combineReducers({
 	header: herderReaducer
 })
