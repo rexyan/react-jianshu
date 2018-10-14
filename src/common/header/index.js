@@ -16,11 +16,31 @@ import {
 }from './style'
 import { actionCreator } from './store'
 
-// 定义一个函数，函数的返回值为热门搜索部分的内容
-// 获取搜索框内获取到焦点，那么就返回该热门搜索部分
-// 否则就返回空，即不现实热门搜索部分
-const getListArea = (show) => {
-	if (show){
+
+class Header extends Component {
+	render(){
+		return (
+		<HeaderWrapper> 
+			<Logo />
+			<Nav>
+				<NavItem className='left active'> 首页 </NavItem>
+				<NavItem className='left'> 下载App </NavItem>
+				<NavItem className='right'> 登录 </NavItem>
+				<NavItem className='right'> Aa </NavItem>
+				<NavSearch onFocus={ this.props.SearchFocus } onBlur={ this.props.SearchBlur }>	
+				</NavSearch>
+					{ this.getListArea() }
+				<Addition>
+					<Button className='writting'> 写文章 </Button>
+					<Button className='reg'> 注册 </Button>
+				</Addition>
+			</Nav>
+			</HeaderWrapper>
+		)
+	}
+
+	getListArea = () => {
+	if (this.props.showSearchArea){
 		return (
 			<Searchinfo>
 				<SearchInfoTitle>
@@ -30,11 +50,11 @@ const getListArea = (show) => {
 					</SearchInfoSwitch>
 				</SearchInfoTitle>
 				<SearchInfoList>
-					<SearchInfoItem> 教育 </SearchInfoItem>
-					<SearchInfoItem> 区块链 </SearchInfoItem>
-					<SearchInfoItem> 小程序 </SearchInfoItem>
-					<SearchInfoItem> Vue </SearchInfoItem>
-					<SearchInfoItem> 理财 </SearchInfoItem>
+					{
+						this.props.list.map((item)=>{
+							return <SearchInfoItem key={ item }> { item } </SearchInfoItem>
+						})
+					}
 				</SearchInfoList>
 			</Searchinfo>
 		)
@@ -42,32 +62,13 @@ const getListArea = (show) => {
 		return null;
 	}
 }
-
-const Header = (props) => {
-	return (
-		<HeaderWrapper> 
-			<Logo />
-			<Nav>
-				<NavItem className='left active'> 首页 </NavItem>
-				<NavItem className='left'> 下载App </NavItem>
-				<NavItem className='right'> 登录 </NavItem>
-				<NavItem className='right'> Aa </NavItem>
-				<NavSearch onFocus={ props.SearchFocus } onBlur={ props.SearchBlur }>	
-				</NavSearch>
-					{ getListArea(props.showSearchArea) }
-				<Addition>
-					<Button className='writting'> 写文章 </Button>
-					<Button className='reg'> 注册 </Button>
-				</Addition>
-			</Nav>
-		</HeaderWrapper>
-	)
 }
 
 
 const mapStateToProps = (state) => {
 	return {
-		showSearchArea: state.get('header').get('showSearchArea')
+		showSearchArea: state.get('header').get('showSearchArea'),
+		list : state.get('header').get('list')
 	}
 }
 
@@ -75,8 +76,11 @@ const mapDispathToProps = (dispatch) => {
 	return {
 		// 获得焦点，派发dispatch函数
 		SearchFocus(){
+			// 获取异步数据
+			dispatch(actionCreator.getList())
 			dispatch(actionCreator.searchFocus())
 		},
+		
 		// 失去焦点，派发dispatch函数
 		SearchBlur(){
 			dispatch(actionCreator.searchBlur())

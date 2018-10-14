@@ -2,7 +2,8 @@ import * as constants from './constants'
 import { fromJS } from 'immutable' 
 
 const defaultState = fromJS({
-	'showSearchArea': ''
+	'showSearchArea': '',
+	'list': []
 });
 
 
@@ -15,6 +16,9 @@ export default (state = defaultState, action ) => {
 	if (action.type === constants.SEARCH_BLUR){
 		return state.set('showSearchArea', false)
 	}
-
+	// 获取热门搜索的值
+	if (action.type === constants.CHANGE_LIST){
+		return state.set('list', action.data)
+	}
 	return state;
 }
