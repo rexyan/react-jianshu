@@ -20,7 +20,7 @@ import { actionCreator } from './store'
 class Header extends Component {
 	render(){
 		// 解构赋值
-		const { SearchFocus, showSearchArea, SearchBlur } = this.props;
+		const { SearchFocus, showSearchArea, SearchBlur, list } = this.props;
 
 		return (
 		<HeaderWrapper> 
@@ -30,7 +30,7 @@ class Header extends Component {
 				<NavItem className='left'> 下载App </NavItem>
 				<NavItem className='right'> 登录 </NavItem>
 				<NavItem className='right'> Aa </NavItem>
-				<NavSearch onFocus={ SearchFocus } onBlur={ SearchBlur }>	
+				<NavSearch onFocus={ () => SearchFocus(list) } onBlur={ SearchBlur }>	
 				</NavSearch>
 					{ this.getListArea() }
 				<Addition>
@@ -95,9 +95,12 @@ const mapStateToProps = (state) => {
 const mapDispathToProps = (dispatch) => {
 	return {
 		// 获得焦点，派发dispatch函数
-		SearchFocus(){
-			// 获取异步数据
-			dispatch(actionCreator.getList())
+		SearchFocus(list){
+			// 没有数据的时候异步获取数据
+			if (list.size === 0){
+				dispatch(actionCreator.getList())
+			}
+			
 			dispatch(actionCreator.searchFocus())
 		},
 		
