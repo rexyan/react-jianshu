@@ -4,7 +4,8 @@ import store from './store';
 import { Provider } from 'react-redux';
 // 导入路由模块
 import { BrowserRouter, Route } from 'react-router-dom';
-
+import Home from './pages/home'
+import Detail from './pages/detail'
 
 class App extends Component {
   render() {
@@ -17,8 +18,8 @@ class App extends Component {
     				{
     					//exact 代表严格匹配
     				}
-    				<Route path='/' exact render={()=><div>home</div>}> </Route> 
-    				<Route path='/detail' exact render={()=><div>detail</div>}> </Route>
+    				<Route path='/' exact component={ Home }> </Route> 
+    				<Route path='/detail' component={ Detail }> </Route>
     			</div>
     		</BrowserRouter>
     	</div>
