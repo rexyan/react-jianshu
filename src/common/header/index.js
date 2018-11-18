@@ -20,7 +20,7 @@ import { actionCreator } from './store'
 class Header extends Component {
 	render(){
 		// 解构赋值
-		const { SearchFocus, showSearchArea, SearchBlur, list } = this.props;
+		const { SearchFocus, SearchBlur, list } = this.props;
 
 		return (
 		<HeaderWrapper> 
