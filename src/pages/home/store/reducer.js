@@ -1,4 +1,5 @@
 import { fromJS } from 'immutable' 
+import * as constants from './constants'
 
 const defaultState = fromJS({
 	topicList: [],
@@ -9,7 +10,7 @@ const defaultState = fromJS({
 
 export default (state = defaultState, action ) => {
 	switch(action.type){
-		case 'change_home_data':
+		case constants.CHANGE_HOME_DATA:
 			// state.set 只能改变一个state中的值， fromJS是将一个普通的js对象，转换成为一个 immutable的对象
 			// state.set('topicList', fromJS(action.topicList))
 			
