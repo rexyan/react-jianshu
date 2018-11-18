@@ -5,6 +5,7 @@ import Recommend from './components/Recommend'
 import Writer from './components/Writer' 
 import { connect } from 'react-redux'
 import { actionCreators } from './store'
+import { BackTop } from './style'
 
 import { 
 	HomeWrapper,
@@ -14,6 +15,11 @@ import {
 
 
 class Home extends Component {
+
+	hancleCcrollTop(){
+		window.scrollTo(0, 0)
+	}
+
 	render(){
 		return (
 			<HomeWrapper> 
@@ -26,6 +32,7 @@ class Home extends Component {
 					<Recommend/>
 					<Writer/>
 				</HomeRight>
+				<BackTop onClick={ this.hancleCcrollTop }> 顶部 </BackTop>
 			</HomeWrapper>
 		)
 	}

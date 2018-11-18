@@ -8,7 +8,6 @@ const defaultState = fromJS({
 	articlePage: 1
 });
 
-
 export default (state = defaultState, action ) => {
 	switch(action.type){
 		case constants.CHANGE_HOME_DATA:
