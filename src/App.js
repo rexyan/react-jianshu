@@ -16,10 +16,13 @@ class App extends Component {
     		<BrowserRouter>
     			<div>
     				{
-    					//exact 代表严格匹配
+    					// exact 代表严格匹配
+                        // <Route path='/detail/:id' exact component={ Detail }> </Route>
+                        // <Route path='/detail' exact component={ Detail }> </Route>
     				}
     				<Route path='/' exact component={ Home }> </Route> 
-    				<Route path='/detail' component={ Detail }> </Route>
+    				<Route path='/detail' exact component={ Detail }> </Route>
+
     			</div>
     		</BrowserRouter>
     	</div>

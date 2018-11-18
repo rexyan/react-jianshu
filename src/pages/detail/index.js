@@ -6,7 +6,6 @@ import { actionCreators } from './store'
 
 class Detail extends Component {
 	render(){
-
 		const { title, content } = this.props
 
 		return (
@@ -18,7 +17,9 @@ class Detail extends Component {
 	}
 
 	componentDidMount(){
-		this.props.getDetail()
+		// this.props.match.params.id 获取的参数是在路由中传递的。不是？方式的
+		// ？方式使用 this.props.localtion.search
+		this.props.getDetail(this.props.match.params.id)
 	}
 }
 
@@ -28,8 +29,8 @@ const mapState = (state) => ({
 })
 
 const mapDispatch = (dispatch) => ({
-	getDetail(){
-		dispatch(actionCreators.getDetail())
+	getDetail(id){
+		dispatch(actionCreators.getDetail(id))
 	}
 })
 
