@@ -13,22 +13,26 @@ import {
 	SearchInfoSwitch,
 	SearchInfoItem,
 	SearchInfoList
-}from './style'
-import { actionCreator } from './store'
-
+}from './style';
+import { actionCreator } from './store';
+import { Link } from 'react-router-dom';
+import { actionCreators as loginActionCreator } from '../../pages/login/store';
 
 class Header extends Component {
 	render(){
 		// 解构赋值
-		const { SearchFocus, SearchBlur, list } = this.props;
+		const { SearchFocus, SearchBlur, list, login, logout } = this.props;
 
 		return (
-		<HeaderWrapper> 
+		<HeaderWrapper>
 			<Logo />
 			<Nav>
 				<NavItem className='left active'> 首页 </NavItem>
 				<NavItem className='left'> 下载App </NavItem>
-				<NavItem className='right'> 登录 </NavItem>
+				{
+					login ? <NavItem className='right' onClick={ logout }> 退出 </NavItem>: 
+					<NavItem className='right'>登陆</NavItem>
+				}
 				<NavItem className='right'> Aa </NavItem>
 				<NavSearch onFocus={ () => SearchFocus(list) } onBlur={ SearchBlur }>	
 				</NavSearch>
@@ -89,6 +93,7 @@ const mapStateToProps = (state) => {
 		page:  state.get('header').get('page'),
 		mouseIn: state.get('header').get('mouseIn'),
 		totalPage: state.get('header').get('totalPage'),
+		login: state.get('login').get('login')
 	}
 }
 
@@ -127,7 +132,11 @@ const mapDispathToProps = (dispatch) => {
 				dispatch(actionCreator.changePage(1))
 			}
 			
-		}
+		},
+
+		logout(){
+			dispatch(loginActionCreator.Userlogout())
+		},
 	}
 }
 
